@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
 
 const polls = [
   {
@@ -29,7 +30,9 @@ export default function PollsDashboard() {
     <div className="px-8 py-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">My Polls</h1>
-        <button className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800">Create New Poll</button>
+        <Link href="/create-poll" className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800">
+          Create New Poll
+        </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {polls.map((poll, idx) => (

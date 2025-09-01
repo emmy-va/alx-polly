@@ -30,7 +30,6 @@ export default function RootLayout({
           <span className="font-bold text-xl">ALX Polly</span>
           <nav className="flex gap-6">
             <Link href="/polls" className="hover:underline">My Polls</Link>
-            <Link href="/create-poll" className="hover:underline">Create Poll</Link>
           </nav>
           <div className="flex items-center gap-2">
             {/* Use Link for the button */}

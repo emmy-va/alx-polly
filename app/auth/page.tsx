@@ -8,7 +8,6 @@ export default function AuthPage() {
       </CardHeader>
       <CardContent>
         {/* TODO: Add login/register forms here */}
-        <p>Login and registration will be available soon.</p>
       </CardContent>
     </Card>
   );

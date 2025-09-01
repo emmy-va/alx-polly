@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import PollForm from "@/components/PollForm";
 
 export default function CreatePollPage() {
   return (
@@ -7,8 +8,7 @@ export default function CreatePollPage() {
         <h2 className="text-xl font-bold">Create a New Poll</h2>
       </CardHeader>
       <CardContent>
-        {/* TODO: Add poll creation form here */}
-        <p>Poll creation form will be available soon.</p>
+        <PollForm />
       </CardContent>
     </Card>
   );
