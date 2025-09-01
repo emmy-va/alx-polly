@@ -24,10 +24,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
+        <nav className="w-full px-4 py-2 border-b flex items-center justify-between">
+          <span className="font-bold text-lg">Polly</span>
+          <div className="space-x-4">
+            <a href="/polls" className="hover:underline">Polls</a>
+            <a href="/votes" className="hover:underline">Votes</a>
+            <a href="/login" className="hover:underline">Login</a>
+          </div>
+        </nav>
+        <main className="max-w-3xl mx-auto p-4">
+          {children}
+        </main>
+        <footer className="w-full text-center py-4 border-t text-xs text-muted-foreground">
+          &copy; {new Date().getFullYear()} Polly. All rights reserved.
+        </footer>
       </body>
     </html>
   );

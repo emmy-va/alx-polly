@@ -2,5 +2,5 @@ import { redirect } from "next/navigation";
 
 export default function Home() {
   redirect("/polls");
-  return null;
+  return <span>Redirecting...</span>;
 }
