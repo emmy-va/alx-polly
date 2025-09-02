@@ -3,10 +3,7 @@ import { cookies } from "next/headers";
 import PollsDashboard from "@/components/PollsDashboard";
 
 async function getPolls() {
-  const cookieStore = cookies();
-  const supabaseClient = supabase.createClient(cookieStore);
-  
-  const { data: polls, error } = await supabaseClient
+  const { data: polls, error } = await supabase
     .from("polls")
     .select("*")
     .order("created_at", { ascending: false });

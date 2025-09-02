@@ -1,12 +1,15 @@
 import { supabase } from "@/lib/supabase";
-import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { VoteForm } from "../components/VoteForm";
-import { VoteResults } from "../components/VoteResults";
+import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import type { PollWithOptionsAndResults } from "@/app/types/database";
 
 type PollDetailParams = {
   params: {

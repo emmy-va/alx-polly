@@ -17,20 +17,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get the user session
-    const cookieStore = cookies();
-    const supabaseClient = supabase.createClient(cookieStore);
-    const { data: { session } } = await supabaseClient.auth.getSession();
-
+  // Get the user session
+    const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+    return NextResponse.json(
+      { error: "Unauthorized", redirect: "/login" },
+      { status: 401 }
+    );
+  }
 
     // Create the poll
-    const { data: poll, error: pollError } = await supabaseClient
+    const { data: poll, error: pollError } = await supabase
       .from("polls")
       .insert({
         title,
@@ -57,7 +54,7 @@ export async function POST(request: Request) {
       position: index,
     }));
 
-    const { data: pollOptions, error: optionsError } = await supabaseClient
+    const { data: pollOptions, error: optionsError } = await supabase
       .from("poll_options")
       .insert(optionsToInsert)
       .select();
@@ -65,7 +62,7 @@ export async function POST(request: Request) {
     if (optionsError) {
       console.error("Error creating poll options:", optionsError);
       // Attempt to delete the poll if options creation fails
-      await supabaseClient.from("polls").delete().eq("id", poll.id);
+  await supabase.from("polls").delete().eq("id", poll.id);
       
       return NextResponse.json(
         { error: "Failed to create poll options" },
