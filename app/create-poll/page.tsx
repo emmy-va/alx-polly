@@ -1,7 +1,10 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PollForm from "@/components/PollForm";
+import withAuth from "@/components/withAuth";
 
-export default function CreatePollPage() {
+function CreatePollPage() {
   return (
     <div className="container max-w-3xl py-8">
       <Card>
@@ -15,3 +18,5 @@ export default function CreatePollPage() {
     </div>
   );
 }
+
+export default withAuth(CreatePollPage);

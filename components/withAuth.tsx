@@ -13,7 +13,7 @@ const withAuth = <P extends object>(
 
     useEffect(() => {
       if (!session) {
-        router.push("/auth");
+        router.push("/login");
       }
     }, [session, router]);
 
