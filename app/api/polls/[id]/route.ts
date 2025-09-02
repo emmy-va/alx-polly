@@ -108,8 +108,7 @@ export async function POST(
         { status: 400 }
       );
     }
-
-    // Get the Supabase client
+// Get the Supabase client
     const cookieStore = cookies();
     const supabaseClient = supabase.createClient(cookieStore);
 
