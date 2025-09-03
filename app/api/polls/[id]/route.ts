@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
@@ -10,9 +10,19 @@ export async function GET(
   try {
     const pollId = params.id;
 
-    // Get the Supabase client
+    // Create supabase client for server-side
     const cookieStore = cookies();
-    const supabaseClient = supabase.createClient(cookieStore);
+    const supabaseClient = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+        },
+      }
+    );
 
     // Fetch poll data
     const { data: poll, error: pollError } = await supabaseClient
@@ -108,9 +118,19 @@ export async function POST(
         { status: 400 }
       );
     }
-// Get the Supabase client
+    // Create supabase client for server-side
     const cookieStore = cookies();
-    const supabaseClient = supabase.createClient(cookieStore);
+    const supabaseClient = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+        },
+      }
+    );
 
     // Get the user session
     const { data: { session } } = await supabaseClient.auth.getSession();

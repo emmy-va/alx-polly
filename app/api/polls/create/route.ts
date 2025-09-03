@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Database } from "@/app/types/database";
@@ -17,14 +17,28 @@ export async function POST(request: Request) {
       );
     }
 
-  // Get the user session
+    // Create supabase client for server-side
+    const cookieStore = cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+        },
+      }
+    );
+    
+    // Get the user session
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-    return NextResponse.json(
-      { error: "Unauthorized", redirect: "/login" },
-      { status: 401 }
-    );
-  }
+      return NextResponse.json(
+        { error: "Unauthorized", redirect: "/login" },
+        { status: 401 }
+      );
+    }
 
     // Create the poll
     const { data: poll, error: pollError } = await supabase
