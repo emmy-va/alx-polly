@@ -15,8 +15,22 @@ export async function POST(request: Request) {
       );
     }
 
-  // Get the user session
-    const { data: { session } } = await supabase.auth.getSession();
+    // Create supabase client for server-side
+    const cookieStore = cookies();
+    const supabaseClient = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+        },
+      }
+    );
+
+    // Get the user session
+    const { data: { session } } = await supabaseClient.auth.getSession();
     if (!session) {
     return NextResponse.json(
       { error: "Unauthorized", redirect: "/login" },

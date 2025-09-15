@@ -2,7 +2,6 @@
 1. Folder & File Structure
 
 All feature code must live under /app/polls/ (for UI, components, forms) or /app/api/ (for backend routes).
-
 Components should be grouped by domain. Example:
 
 /app/polls/components/ → UI (PollCard, PollForm, ResultsGraph)
