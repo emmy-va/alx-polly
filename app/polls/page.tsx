@@ -1,8 +1,9 @@
-import { supabase } from "@/lib/supabase";
+import { createSupabaseServerClient } from "@/lib/supabase";
 import { cookies } from "next/headers";
 import PollsDashboard from "@/components/PollsDashboard";
 
 async function getPolls() {
+  const supabase = createSupabaseServerClient({ cookies });
   const { data: polls, error } = await supabase
     .from("polls")
     .select("*")

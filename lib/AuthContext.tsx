@@ -16,17 +16,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
+    if (!supabase) return;
+
+    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    // Listen for auth state changes
+    const { data } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
 
-    return () => subscription.unsubscribe();
+    // Cleanup subscription on unmount
+    return () => {
+      data?.subscription?.unsubscribe();
+    };
   }, []);
 
   return (
